@@ -52,10 +52,3 @@ It helps blood banks efficiently manage donors, blood inventory, requests, patie
 | Dependencies| Listed in `requirements.txt`| Python packages                    |
 
 
-DBMS-Blood-Bank-Management-System/
-├── backend/                ← Python backend logic/API (Flask)
-├── frontend/               ← HTML + CSS + JS static files or templates
-├── sql/                    ← Database schema, tables, sample data (.sql files)
-├── Screenshots/            ← Project UI screenshots 
-├── requirements.txt        ← Python dependencies (pip install -r)
-├── README.md
