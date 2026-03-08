@@ -1,0 +1,9 @@
+body{font-family: Arial, sans-serif; margin:0; padding:0}
+header{background:#b71c1c;color:white;padding:12px}
+header h1{margin:0}
+nav a{color:white;margin-right:12px;text-decoration:none}
+main{padding:16px}
+table{width:100%;border-collapse:collapse;margin-top:8px}
+th,td{padding:8px;border:1px solid #ddd;text-align:left}
+form input, form label{display:block;margin:6px 0}
+button{padding:8px 12px;border-radius:6px;border:none;background:#b71c1c;color:white}

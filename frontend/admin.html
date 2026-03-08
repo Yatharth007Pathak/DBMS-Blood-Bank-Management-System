@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | Blood Bank Management System</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f4f6f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #b30000;
+      color: #fff;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    nav {
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 10px 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #b30000;
+      margin: 0 20px;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    nav a:hover,
+    nav a.active {
+      text-decoration: underline;
+    }
+
+    .container {
+      width: 85%;
+      margin: 30px auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 20px;
+    }
+
+    .card {
+      flex: 1 1 250px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 25px 15px;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h3 {
+      color: #b30000;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin: 0;
+      color: #222;
+    }
+
+    .status {
+      text-align: center;
+      margin-top: 20px;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      background-color: #b30000;
+      color: white;
+      text-align: center;
+      padding: 12px 0;
+      margin-top: 40px;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .card {
+        width: 80%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>Blood Bank Management System — Admin Dashboard</header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="donors.html">Donors</a>
+    <a href="requests.html">Requests</a>
+    <a href="blood_stock.html">Blood Stock</a>
+    <a href="admin.html" class="active">Admin</a>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h3>Total Registered Donors</h3>
+      <p id="donorCount">--</p>
+    </div>
+
+    <div class="card">
+      <h3>Available Blood Units</h3>
+      <p id="bloodUnits">--</p>
+    </div>
+
+    <div class="card">
+      <h3>Pending Requests</h3>
+      <p id="pendingRequests">--</p>
+    </div>
+
+    <div class="card">
+      <h3>Total Donations Recorded</h3>
+      <p id="donationCount">--</p>
+    </div>
+
+    <div class="card">
+      <h3>Expired Units</h3>
+      <p id="expiredUnits">--</p>
+    </div>
+  </div>
+
+  <div class="status" id="statusMsg">Loading dashboard data...</div>
+
+  <footer>&copy; 2025 Blood Bank Management System | Admin Panel</footer>
+
+  <script>
+    const API = "http://localhost:5000/api";
+
+    function updateDashboard(data) {
+      document.getElementById("donorCount").innerText = data.totalDonors ?? 0;
+      document.getElementById("bloodUnits").innerText = data.availableUnits ?? 0;
+      document.getElementById("pendingRequests").innerText = data.pendingRequests ?? 0;
+      document.getElementById("donationCount").innerText = data.totalDonations ?? 0;
+      document.getElementById("expiredUnits").innerText = data.expiredUnits ?? 0;
+      document.getElementById("statusMsg").innerText = "✅ Dashboard updated successfully.";
+    }
+
+    function loadDashboardData() {
+      fetch(`${API}/dashboard`)
+        .then((res) => {
+          if (!res.ok) throw new Error("Server not reachable");
+          return res.json();
+        })
+        .then((data) => updateDashboard(data))
+        .catch(() => {
+          document.getElementById("statusMsg").innerText =
+            "⚠️ Backend not connected. Showing demo data.";
+          updateDashboard({
+            totalDonors: 30,
+            availableUnits: 55,
+            pendingRequests: 6,
+            totalDonations: 42,
+            expiredUnits: 3,
+          });
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", loadDashboardData);
+  </script>
+</body>
+</html>

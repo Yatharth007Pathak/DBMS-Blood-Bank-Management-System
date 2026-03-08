@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Blood Requests | Blood Bank</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header>
+    <h1>Blood Requests Management</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="donors.html">Donors</a>
+      <a href="requests.html" class="active">Requests</a>
+      <a href="blood_stock.html">Blood Stock</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Create Request Form -->
+    <section class="form-section">
+      <h2>Create Blood Request</h2>
+      <form id="request-form">
+        <label>
+          Patient Name:
+          <input name="patient_name" type="text" placeholder="Enter patient name" required>
+        </label>
+
+        <label>
+          Hospital:
+          <input name="hospital" type="text" placeholder="Hospital name">
+        </label>
+
+        <label>
+          Blood Group:
+          <select name="blood_group" required>
+            <option value="">Select</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+          </select>
+        </label>
+
+        <label>
+          Units Requested:
+          <input name="units_requested" type="number" min="1" placeholder="Number of units" required>
+        </label>
+
+        <label>
+          Request Reason:
+          <input name="request_reason" type="text" placeholder="Reason (e.g. Surgery, Accident)">
+        </label>
+
+        <label>
+          Status:
+          <select name="status">
+            <option value="PENDING">PENDING</option>
+            <option value="FULFILLED">FULFILLED</option>
+            <option value="REJECTED">REJECTED</option>
+          </select>
+        </label>
+
+        <button type="submit">Submit Request</button>
+      </form>
+    </section>
+
+    <!-- All Requests Table -->
+    <section class="table-section">
+      <h2>All Requests</h2>
+      <table id="requests-table">
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>Patient Name</th>
+            <th>Hospital</th>
+            <th>Blood Group</th>
+            <th>Units</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Requested At</th>
+            <th>Fulfilled At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Populated dynamically by app.js -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Blood Bank Management System</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

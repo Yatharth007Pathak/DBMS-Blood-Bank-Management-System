@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Blood Bank Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header>
+    <h1>Blood Bank Dashboard</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="donors.html">Donors</a>
+      <a href="requests.html">Requests</a>
+      <a href="blood_stock.html">Blood Stock</a>
+      <a href="admin.html">Admin</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- INVENTORY DISPLAY -->
+    <section id="inventory-section">
+      <h2>Current Inventory</h2>
+      <table id="inventory-table">
+        <thead>
+          <tr>
+            <th>Unit ID</th>
+            <th>Blood Group</th>
+            <th>Donor ID</th>
+            <th>Quantity (ml)</th>
+            <th>Component</th>
+            <th>Donation Date</th>
+            <th>Expiry Date</th>
+            <th>Storage Location</th>
+            <th>Temperature (°C)</th>
+            <th>Status</th>
+            <th>Remarks</th>
+            <th>Last Updated</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- QUICK STOCK FORM -->
+    <section id="quick-forms">
+      <h2>Add or Update Blood Unit</h2>
+      <form id="stock-form">
+        <label>
+          Blood Group:
+          <select name="blood_group" required>
+            <option value="">Select</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+          </select>
+        </label>
+
+        <label>
+          Donor ID:
+          <input name="donor_id" type="number" min="1" placeholder="e.g. 4" required>
+        </label>
+
+        <label>
+          Quantity (ml):
+          <input name="quantity_ml" type="number" min="100" max="600" value="450" required>
+        </label>
+
+        <label>
+          Blood Component:
+          <select name="blood_component">
+            <option value="Whole Blood">Whole Blood</option>
+            <option value="Plasma">Plasma</option>
+            <option value="Platelets">Platelets</option>
+            <option value="RBC">RBC</option>
+          </select>
+        </label>
+
+        <label>
+          Donation Date:
+          <input name="donation_date" type="date" required>
+        </label>
+
+        <label>
+          Storage Location:
+          <input name="storage_location" placeholder="e.g. Refrigerator-1" required>
+        </label>
+
+        <label>
+          Temperature (°C):
+          <input name="storage_temperature" type="number" step="0.1" min="2" max="6" value="4.0" required>
+        </label>
+
+        <label>
+          Status:
+          <select name="status">
+            <option value="AVAILABLE">AVAILABLE</option>
+            <option value="USED">USED</option>
+            <option value="EXPIRED">EXPIRED</option>
+          </select>
+        </label>
+
+        <label>
+          Remarks:
+          <input name="remarks" placeholder="Optional remarks">
+        </label>
+
+        <button type="submit">Save Blood Unit</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Blood Bank Management System</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

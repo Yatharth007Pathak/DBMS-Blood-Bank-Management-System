@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blood Stock | Blood Bank Management System</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background-color: #f4f6f9;
+      color: #333;
+    }
+
+    header {
+      background-color: #b30000;
+      color: white;
+      text-align: center;
+      padding: 15px 0;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    nav {
+      background-color: #fff;
+      padding: 10px 0;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #b30000;
+      margin: 0 20px;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    nav a:hover,
+    nav a.active {
+      text-decoration: underline;
+    }
+
+    .container {
+      width: 85%;
+      margin: 30px auto;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #b30000;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #b30000;
+      color: white;
+      padding: 12px;
+      text-align: center;
+    }
+
+    td {
+      padding: 10px;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .status {
+      text-align: center;
+      margin-top: 15px;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    footer {
+      background-color: #b30000;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      margin-top: 30px;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      table {
+        font-size: 0.85rem;
+      }
+      th, td {
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>Blood Bank Management System — Blood Stock</header>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="donors.html">Donors</a>
+    <a href="requests.html">Requests</a>
+    <a href="admin.html">Admin Dashboard</a>
+  </nav>
+
+  <div class="container">
+    <h2>Available Blood Stock</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Unit ID</th>
+          <th>Blood Group</th>
+          <th>Donor ID</th>
+          <th>Quantity (ml)</th>
+          <th>Component</th>
+          <th>Donation Date</th>
+          <th>Expiry Date</th>
+          <th>Storage Location</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="stockTableBody">
+        <!-- Data populated dynamically -->
+      </tbody>
+    </table>
+
+    <div class="status" id="statusMsg">Loading stock data...</div>
+  </div>
+
+  <footer>&copy; 2025 Blood Bank Management System | Blood Stock Page</footer>
+
+  <script>
+    const API = "http://localhost:5000/api/inventory";
+
+    function renderTable(data) {
+      const tbody = document.getElementById("stockTableBody");
+      tbody.innerHTML = "";
+
+      data.forEach((row) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.unit_id}</td>
+          <td>${row.blood_group}</td>
+          <td>${row.donor_id || "-"}</td>
+          <td>${row.quantity_ml}</td>
+          <td>${row.blood_component}</td>
+          <td>${row.donation_date}</td>
+          <td>${row.expiry_date}</td>
+          <td>${row.storage_location || "-"}</td>
+          <td>${row.status}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function loadStockData() {
+      fetch(API)
+        .then((res) => {
+          if (!res.ok) throw new Error("Backend not reachable");
+          return res.json();
+        })
+        .then((data) => {
+          renderTable(data);
+          document.getElementById("statusMsg").innerText = "✅ Stock data loaded successfully.";
+        })
+        .catch(() => {
+          const sampleData = [
+            {
+              unit_id: 1,
+              blood_group: "A+",
+              donor_id: 1,
+              quantity_ml: 450,
+              blood_component: "Whole Blood",
+              donation_date: "2025-10-01",
+              expiry_date: "2025-11-12",
+              storage_location: "Refrigerator-1",
+              status: "AVAILABLE"
+            },
+            {
+              unit_id: 2,
+              blood_group: "O+",
+              donor_id: 2,
+              quantity_ml: 450,
+              blood_component: "Plasma",
+              donation_date: "2025-10-05",
+              expiry_date: "2025-11-16",
+              storage_location: "Refrigerator-2",
+              status: "USED"
+            }
+          ];
+          renderTable(sampleData);
+          document.getElementById("statusMsg").innerText =
+            "⚠️ Backend not connected. Showing sample data.";
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", loadStockData);
+  </script>
+</body>
+</html>
